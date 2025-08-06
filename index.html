@@ -126,30 +126,27 @@
             <img 
                 src="/assets/imagenes/image.png" 
                 alt="Productos de belleza" 
-                class="w-full h-full object-cover opacity-95"
+                class="w-full h-full object-cover opacity-95 scale-x-[-1]"
                 style="object-position: center 75%;"
             >
             <div class="absolute inset-0 bg-cream/20 backdrop-blur-[1px]"></div>
         </div>
 
-        <div class="container mx-auto text-center relative z-10 pt-12">
-            <div class="floating mb-6">
-                <div class="w-20 h-20 bg-mint/80 backdrop-blur-md rounded-full mx-auto flex items-center justify-center mb-4">
-                    <span class="text-3xl">🌸</span>
+        <div class="container mx-auto relative z-10 h-full flex items-center">
+            <div class="flex w-full">
+                <div class="w-1/2 pl-32">
+                    <div>
+                        <h2 class="text-6xl font-bold text-forest mb-6">Productos de<br>Belleza</h2>
+                        <p class="text-xl text-forest mb-6">
+                            Descubrí perfumes, maquillaje y<br>cuidados que te acompañan<br>todos los días.
+                        </p>
+                        <button onclick="document.getElementById('productos').scrollIntoView({behavior: 'smooth'})" 
+                                class="bg-sage hover:bg-moss text-cream px-8 py-4 rounded-full transition-all transform hover:scale-105 shadow-lg text-lg">
+                            Explorar Colección
+                        </button>
+                    </div>
                 </div>
             </div>
-            <h2 class="text-5xl font-bold text-forest mb-4">Productos de Belleza</h2>
-            <p class="text-xl text-forest max-w-4xl mx-auto mb-6">
-                Descubrí productos de maquillaje y cuidado personal que realzan tu esencia.
-            </p>
-            <p class="text-lg text-forest max-w-2xl mx-auto mb-8 flex items-center justify-center gap-2">
-                <span class="text-2xl">🌸</span>
-                <span>Tu rincón de belleza, disponible 24/7 🌸</span>
-            </p>
-            <button onclick="document.getElementById('productos').scrollIntoView({behavior: 'smooth'})" 
-                    class="bg-sage hover:bg-moss text-cream px-8 py-3 rounded-full transition-all transform hover:scale-105 shadow-lg">
-                Explorar Productos
-            </button>
         </div>
     </section>
 
