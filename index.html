@@ -76,13 +76,36 @@
 </head>
 <body class="bg-cream leaf-bg font-ghibli">
     <!-- Header -->
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-sage/20">
-        <div class="container mx-auto px-8 py-6">
-            <div class="flex items-center justify-between">
+<header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-sage/20">
+    <div class="container mx-auto px-4 py-4 md:px-8 md:py-6">
+        <div class="flex items-center justify-between">
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-forest hover:text-sage transition-all duration-300" id="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <!-- Center Logo for Mobile -->
+            <div class="md:hidden">
+                <h1 class="text-3xl font-light text-forest tracking-widest" style="font-family: 'Playfair Display', serif;">Nalis</h1>
+            </div>
+
+            <!-- Mobile Icons -->
+            <div class="flex items-center space-x-4 md:hidden">
+                <button class="text-forest hover:text-sage transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center justify-between w-full">
                 <!-- Left Links -->
                 <nav class="flex items-center space-x-12 w-1/3">
                     <a href="#hero" class="text-lg text-forest hover:text-sage transition-all duration-300 font-light">
-                        Home
+                        Inicio
                     </a>
                     <a href="#productos" class="text-lg text-forest hover:text-sage transition-all duration-300 font-light">
                         Productos
@@ -117,7 +140,23 @@
                 </div>
             </div>
         </div>
-    </header>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <nav class="flex flex-col space-y-4 mt-4 pb-4">
+                <a href="#hero" class="text-lg text-forest hover:text-sage transition-all duration-300 font-light">
+                    Inicio
+                </a>
+                <a href="#productos" class="text-lg text-forest hover:text-sage transition-all duration-300 font-light">
+                    Productos
+                </a>
+                <a href="#nuevos" class="text-lg text-forest hover:text-sage transition-all duration-300 font-light">
+                    Novedades
+                </a>
+            </nav>
+        </div>
+    </div>
+</header>
 
     <!-- Hero Section -->
     <section class="relative h-[60vh] px-6" id="hero">
@@ -134,14 +173,19 @@
 
         <div class="container mx-auto relative z-10 h-full flex items-center">
             <div class="flex w-full">
-                <div class="w-1/2 pl-32">
+                <!-- Contenedor del texto con ajustes responsive -->
+                <div class="w-full md:w-1/2 px-4 md:pl-32 text-center md:text-left">
                     <div>
-                        <h2 class="text-6xl font-bold text-forest mb-6">Productos de<br>Belleza</h2>
-                        <p class="text-xl text-forest mb-6">
-                            Descubrí perfumes, maquillaje y<br>cuidados que te acompañan<br>todos los días.
+                        <h2 class="text-4xl md:text-6xl font-bold text-forest mb-4 md:mb-6">
+                            Productos de<br>Belleza
+                        </h2>
+                        <p class="text-lg md:text-xl text-forest mb-6">
+                            Descubrí perfumes, maquillaje y<br class="hidden md:block">
+                            cuidados que te acompañan<br class="hidden md:block">
+                            todos los días.
                         </p>
                         <button onclick="document.getElementById('productos').scrollIntoView({behavior: 'smooth'})" 
-                                class="bg-sage hover:bg-moss text-cream px-8 py-4 rounded-full transition-all transform hover:scale-105 shadow-lg text-lg">
+                                class="bg-sage hover:bg-moss text-cream px-6 md:px-8 py-3 md:py-4 rounded-full transition-all transform hover:scale-105 shadow-lg text-base md:text-lg">
                             Explorar Colección
                         </button>
                     </div>
@@ -151,24 +195,37 @@
     </section>
 
     <!-- New Arrivals Section -->
-    <section id="nuevos" class="py-16 px-6 bg-mint/10">
-        <div class="container mx-auto">
-            <h3 class="text-4xl font-bold text-center text-forest mb-12">Nuevos Ingresos</h3>
+    <section id="nuevos" class="py-16 px-6 bg-cream relative">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 z-0 opacity-50">
+            <div class="absolute inset-0 bg-gradient-to-br from-mint/10 to-sage/10"></div>
+        </div>
+
+        <div class="container mx-auto relative z-10">
+            <h3 class="text-4xl md:text-5xl font-light text-forest mb-12 text-center" style="font-family: 'Playfair Display', serif;">
+                Nuevos Ingresos
+            </h3>
             
             <div class="relative overflow-hidden">
                 <div class="carousel-container flex transition-transform duration-500 ease-in-out" id="carousel">
                     <!-- New Product 1 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-pink-200 to-purple-200 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">✨</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Estrella Fugaz</h4>
-                            <p class="text-moss mb-4">Fragancia mística con notas de violeta, iris y polvo de estrellas</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Estrella Fugaz</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Fragancia mística con notas de violeta, iris y polvo de estrellas</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$52</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$52</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -177,16 +234,22 @@
 
                     <!-- New Product 2 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-green-200 to-blue-200 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">🌊</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp1.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Océano Místico</h4>
-                            <p class="text-moss mb-4">Esencia marina con algas, sal del Himalaya y brisa oceánica</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Océano Místico</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Esencia marina con algas, sal del Himalaya y brisa oceánica</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$49</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$49</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -195,16 +258,22 @@
 
                     <!-- New Product 3 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">🔥</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Fuego Dorado</h4>
-                            <p class="text-moss mb-4">Cálida y especiada con cardamomo, jengibre y miel salvaje</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Fuego Dorado</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Cálida y especiada con cardamomo, jengibre y miel salvaje</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$54</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$54</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -213,16 +282,22 @@
 
                     <!-- New Product 4 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-purple-200 to-indigo-200 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">🌌</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp1.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Galaxia Infinita</h4>
-                            <p class="text-moss mb-4">Misteriosa y profunda con oud, incienso y notas cósmicas</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Galaxia Infinita</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Misteriosa y profunda con oud, incienso y notas cósmicas</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$58</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$58</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -231,16 +306,22 @@
 
                     <!-- New Product 5 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-rose-200 to-pink-300 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">🌹</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Rosa Eterna</h4>
-                            <p class="text-moss mb-4">Elegante y romántica con pétalos de rosa, peonía y almizcle</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Rosa Eterna</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Elegante y romántica con pétalos de rosa, peonía y almizcle</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$56</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$56</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -249,16 +330,22 @@
 
                     <!-- New Product 6 -->
                     <div class="carousel-item flex-shrink-0 w-full md:w-1/3 px-4">
-                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle mx-auto max-w-sm">
-                            <div class="w-full h-48 bg-gradient-to-br from-emerald-200 to-teal-200 rounded-xl mb-4 flex items-center justify-center relative overflow-hidden">
-                                <span class="text-6xl">🌿</span>
-                                <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">NUEVO</div>
+                        <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all mx-auto max-w-sm border border-sage/10">
+                            <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden">
+                                <img 
+                                    src="/assets/imagenes/lrp1.png"
+                                    alt="Producto de belleza"
+                                    class="w-full h-full object-cover"
+                                >
+                                <div class="absolute top-3 right-3 bg-sage/80 backdrop-blur-sm text-cream text-xs px-3 py-1 rounded-full">
+                                    NUEVO
+                                </div>
                             </div>
-                            <h4 class="text-xl font-bold text-forest mb-2">Selva Encantada</h4>
-                            <p class="text-moss mb-4">Fresca y natural con eucalipto, menta y hojas verdes</p>
+                            <h4 class="text-xl font-light text-forest mb-2">Selva Encantada</h4>
+                            <p class="text-moss/90 mb-4 text-sm">Fresca y natural con eucalipto, menta y hojas verdes</p>
                             <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-sage">$51</span>
-                                <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                                <span class="text-xl font-light text-forest">$51</span>
+                                <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                                     Consultar
                                 </button>
                             </div>
@@ -267,34 +354,51 @@
                 </div>
                 
                 <!-- Carousel indicators -->
-                <div class="flex justify-center mt-8 space-x-2">
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="0"></button>
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="1"></button>
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="2"></button>
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="3"></button>
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="4"></button>
-                    <button class="carousel-dot w-3 h-3 rounded-full bg-sage/50 hover:bg-sage transition-all" data-slide="5"></button>
+                <div class="flex justify-center mt-8 space-x-3">
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="0"></button>
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="1"></button>
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="2"></button>
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="3"></button>
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="4"></button>
+                    <button class="carousel-dot w-2 h-2 rounded-full bg-sage/30 hover:bg-sage transition-all" data-slide="5"></button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Products Section -->
-    <section id="productos" class="py-16 px-6 bg-sage/5">
-        <div class="container mx-auto">
-            <h3 class="text-4xl font-bold text-center text-forest mb-12">Nuestra Colección</h3>
+    <section id="productos" class="py-16 px-6 relative">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-mint/5 via-sage/5 to-taupe/5"></div>
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 80%, rgba(184, 212, 193, 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(156, 175, 136, 0.08) 0%, transparent 50%);"></div>
+        </div>
+
+        <div class="container mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-sage text-lg font-light tracking-wider mb-3 block">Descubrí nuestra selección</span>
+                <h3 class="text-4xl md:text-5xl font-light text-forest mb-4" style="font-family: 'Playfair Display', serif;">
+                    Los Favoritos de Nalis
+                </h3>
+                <div class="w-24 h-1 bg-sage/30 mx-auto"></div>
+            </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product 1 -->
-                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-mint/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">🌺</span>
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle border border-sage/10">
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Jardín Secreto</h4>
-                    <p class="text-moss mb-4">Notas florales suaves con toques de jazmín y rosa silvestre</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Jardín Secreto</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Notas florales suaves con toques de jazmín y rosa silvestre</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$45</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$45</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -302,14 +406,19 @@
 
                 <!-- Product 2 -->
                 <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-sage/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">🌿</span>
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Bosque Encantado</h4>
-                    <p class="text-moss mb-4">Esencia fresca con cedro, musgo y hierbas aromáticas</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Bosque Encantado</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Esencia fresca con cedro, musgo y hierbas aromáticas</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$50</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$50</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -317,14 +426,19 @@
 
                 <!-- Product 3 -->
                 <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-taupe/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">🍃</span>
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Brisa Marina</h4>
-                    <p class="text-moss mb-4">Fragancia fresca con notas cítricas y sal marina</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Brisa Marina</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Fragancia fresca con notas cítricas y sal marina</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$42</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$42</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -332,14 +446,19 @@
 
                 <!-- Product 4 -->
                 <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-mint/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">🌙</span>
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Luna de Miel</h4>
-                    <p class="text-moss mb-4">Dulce y envolvente con vainilla, ámbar y sándalo</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Luna de Miel</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Dulce y envolvente con vainilla, ámbar y sándalo</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$48</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$48</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -347,14 +466,19 @@
 
                 <!-- Product 5 -->
                 <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-sage/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">☀️</span>
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Amanecer Dorado</h4>
-                    <p class="text-moss mb-4">Cálida y reconfortante con canela, naranja y pachulí</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Amanecer Dorado</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Cálida y reconfortante con canela, naranja y pachulí</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$46</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$46</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -362,14 +486,19 @@
 
                 <!-- Product 6 -->
                 <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all sparkle">
-                    <div class="w-full h-48 bg-taupe/30 rounded-xl mb-4 flex items-center justify-center">
-                        <span class="text-6xl">🌸</span>
+                    <div class="w-full h-48 rounded-xl mb-4 relative overflow-hidden group">
+                        <img 
+                            src="/assets/imagenes/lrp.png"
+                            alt="Producto de belleza"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-sage/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    <h4 class="text-xl font-bold text-forest mb-2">Cerezo en Flor</h4>
-                    <p class="text-moss mb-4">Delicada y primaveral con pétalos de cerezo y té blanco</p>
+                    <h4 class="text-xl font-light text-forest mb-2" style="font-family: 'Playfair Display', serif;">Cerezo en Flor</h4>
+                    <p class="text-moss/90 mb-4 text-sm">Delicada y primaveral con pétalos de cerezo y té blanco</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-sage">$44</span>
-                        <button class="bg-taupe hover:bg-moss text-forest hover:text-cream px-4 py-2 rounded-full transition-all">
+                        <span class="text-xl font-light text-forest">$44</span>
+                        <button class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all text-sm">
                             Consultar
                         </button>
                     </div>
@@ -379,43 +508,83 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contacto" class="py-16 px-6 bg-sage/10">
-        <div class="container mx-auto text-center">
-            <h3 class="text-4xl font-bold text-forest mb-8">Contáctanos</h3>
-            <p class="text-xl text-moss mb-8 max-w-2xl mx-auto">
-                ¿Tienes alguna pregunta sobre nuestros perfumes? ¡Escríbenos por WhatsApp y te ayudaremos a encontrar tu fragancia perfecta!
-            </p>
-            
-            <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto shadow-lg">
-                <div class="floating mb-6">
-                    <div class="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center">
-                        <span class="text-white text-2xl">📱</span>
+    <section id="contacto" class="py-16 px-6 relative">
+        <!-- Background decoration -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-mint/5 via-sage/5 to-cream"></div>
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 80% 20%, rgba(184, 212, 193, 0.08) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(156, 175, 136, 0.08) 0%, transparent 50%);"></div>
+        </div>
+
+        <div class="container mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-sage text-lg font-light tracking-wider mb-3 block">Estamos para ayudarte</span>
+                <h3 class="text-4xl md:text-5xl font-light text-forest mb-4" style="font-family: 'Playfair Display', serif;">
+                    Contacto
+                </h3>
+                <div class="w-24 h-1 bg-sage/30 mx-auto"></div>
+            </div>
+
+            <div class="max-w-xl mx-auto">
+                <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-sage/10">
+                    <div class="mb-8">
+                        <h4 class="text-2xl font-light text-forest mb-4" style="font-family: 'Playfair Display', serif;">¿Necesitás ayuda?</h4>
+                        <p class="text-moss/90">Escribinos por WhatsApp y te ayudaremos a encontrar tu fragancia perfecta.</p>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 bg-sage/5 rounded-xl mb-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-sage/20 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-xl">📱</span>
+                            </div>
+                            <div>
+                                <p class="text-forest font-light">Respuesta inmediata</p>
+                                <p class="text-moss/90 text-sm">Lun-Vie 9:00-18:00</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/1234567890?text=Hola%20Nalis!%20Me%20interesa%20conocer%20más%20sobre%20sus%20perfumes" 
+                           target="_blank"
+                           class="bg-sage hover:bg-moss text-cream px-6 py-2 rounded-full transition-all transform hover:scale-105 text-sm">
+                            Escribinos
+                        </a>
                     </div>
                 </div>
-                <h4 class="text-2xl font-bold text-forest mb-4">WhatsApp</h4>
-                <p class="text-moss mb-6">Respuesta rápida y personalizada</p>
-                <a href="https://wa.me/1234567890?text=Hola%20Nalis!%20Me%20interesa%20conocer%20más%20sobre%20sus%20perfumes" 
-                   target="_blank"
-                   class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full transition-all transform hover:scale-105 shadow-lg">
-                    <span class="mr-2">💬</span>
-                    Escribir por WhatsApp
-                </a>
-                <p class="text-sm text-moss mt-4">Horario de atención: Lun-Vie 9:00-18:00</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-forest text-cream py-8 px-6">
-        <div class="container mx-auto text-center">
-            <div class="flex items-center justify-center space-x-3 mb-4">
-                <div class="w-8 h-8 bg-sage rounded-full flex items-center justify-center">
-                    <span class="text-sm">🌿</span>
+    <footer class="border-t border-sage/20 bg-white/80 backdrop-blur-sm">
+        <div class="container mx-auto py-12 px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Logo and description -->
+                <div class="text-center md:text-left">
+                    <h5 class="text-3xl font-light text-forest mb-4" style="font-family: 'Playfair Display', serif;">Nalis</h5>
+                    <p class="text-moss/90 text-sm">Perfumería artesanal inspirada en la naturaleza y creada con amor.</p>
                 </div>
-                <h5 class="text-xl font-bold">Nalis</h5>
+
+                <!-- Quick Links -->
+                <div class="text-center">
+                    <h6 class="text-forest font-light mb-4">Enlaces Rápidos</h6>
+                    <nav class="flex flex-col space-y-2">
+                        <a href="#hero" class="text-moss/90 hover:text-sage transition-all text-sm">Inicio</a>
+                        <a href="#productos" class="text-moss/90 hover:text-sage transition-all text-sm">Productos</a>
+                        <a href="#nuevos" class="text-moss/90 hover:text-sage transition-all text-sm">Novedades</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="text-center md:text-right">
+                    <h6 class="text-forest font-light mb-4">Contacto</h6>
+                    <div class="space-y-2">
+                        <p class="text-moss/90 text-sm">WhatsApp: +54 1234567890</p>
+                        <p class="text-moss/90 text-sm">info@nalis.com</p>
+                    </div>
+                </div>
             </div>
-            <p class="text-sage mb-4">Perfumería artesanal inspirada en la naturaleza</p>
-            <p class="text-sm text-mint">© 2024 Nalis. Creado con amor y dedicación.</p>
+
+            <div class="border-t border-sage/10 mt-8 pt-8 text-center">
+                <p class="text-moss/70 text-sm">© 2024 Nalis. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
 
@@ -495,6 +664,21 @@
         
         // Update carousel on window resize
         window.addEventListener('resize', updateCarousel);
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96aa9c6431b5988b',t:'MTc1NDQ0MjE2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
