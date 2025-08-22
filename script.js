@@ -1,159 +1,193 @@
-// Smooth scrolling for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
+/* ========== Helpers ========== */
+const $ = (s, ctx = document) => ctx.querySelector(s);
+const $$ = (s, ctx = document) => Array.from(ctx.querySelectorAll(s));
+const debounce = (fn, ms = 200) => {
+  let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+};
+
+/* ========== Smooth scrolling ========== */
+$$('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (!id || id === '#') return;
+    const el = $(id);
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 });
 
-// Add sparkle effect on hover
-document.querySelectorAll('.sparkle').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-    });
+/* ========== Sparkle hover ========== */
+$$('.sparkle').forEach(card => {
+  card.addEventListener('mouseenter', () => card.style.transform = 'translateY(-5px)');
+  card.addEventListener('mouseleave', () => card.style.transform = 'translateY(0)');
 });
 
-// Carousel functionality
-let currentSlide = 0;
-const carousel = document.getElementById('carousel');
-const dots = document.querySelectorAll('.carousel-dot');
-const totalSlides = 6;
+/* ========== Carrusel: “Nuevos Ingresos” ========== */
+const carousel = $('#carousel');
+const dots = $$('.carousel-dot');
+let currentIndex = 0;
 
-function updateCarousel() {
-    const isDesktop = window.innerWidth >= 768;
-    let translateX;
-    
-    if (isDesktop) {
-        translateX = -currentSlide * 33.33;
-    } else {
-        translateX = -currentSlide * 100;
-    }
-    
-    carousel.style.transform = `translateX(${translateX}%)`;
-    
-    dots.forEach((dot, index) => {
-        if (index === currentSlide) {
-            dot.classList.remove('bg-sage/50');
-            dot.classList.add('bg-sage');
-        } else {
-            dot.classList.remove('bg-sage');
-            dot.classList.add('bg-sage/50');
-        }
-    });
+function visiblePerView() {
+  // md breakpoint ~768px: en desktop queremos mostrar 3 por vista, en mobile 1
+  return window.matchMedia('(min-width: 768px)').matches ? 3 : 1;
 }
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    updateCarousel();
+function slideTo(index) {
+  if (!carousel) return;
+  const items = $$('.carousel-item', carousel);
+  if (items.length === 0) return;
+
+  const perView = visiblePerView();
+  const maxIndex = Math.max(0, items.length - perView);
+
+  currentIndex = Math.max(0, Math.min(index, maxIndex));
+
+  // ancho real del primer item (incluye padding horizontal de px-4)
+  const itemWidth = items[0].getBoundingClientRect().width;
+  const offset = -(currentIndex * itemWidth);
+
+  carousel.style.transform = `translateX(${offset}px)`;
+  carousel.style.transition = 'transform 500ms ease-in-out';
+
+  // Dots activos por “página”, no por item
+  dots.forEach((d, i) => {
+    const active = i === currentIndex;
+    d.classList.toggle('bg-sage', active);
+    d.classList.toggle('bg-sage/30', !active);
+  });
 }
 
-// Auto-advance carousel
-setInterval(nextSlide, 3000);
+// Dots → ir a esa “página”
+dots.forEach((d, i) => d.addEventListener('click', () => slideTo(i)));
 
-// Dot navigation
-dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-        currentSlide = index;
-        updateCarousel();
-    });
+// Auto-advance por “página”
+let autoTimer = null;
+function startAuto() {
+  stopAuto();
+  autoTimer = setInterval(() => {
+    const items = $$('.carousel-item', carousel);
+    if (items.length === 0) return;
+    const perView = visiblePerView();
+    const maxIndex = Math.max(0, items.length - perView);
+    const next = currentIndex >= maxIndex ? 0 : currentIndex + 1;
+    slideTo(next);
+  }, 3000);
+}
+function stopAuto() { if (autoTimer) clearInterval(autoTimer); }
+
+window.addEventListener('resize', () => slideTo(currentIndex));
+requestAnimationFrame(() => { slideTo(0); startAuto(); });
+
+/* ========== Menú mobile ========== */
+const mobileMenuButton = $('#mobile-menu-button');
+const mobileMenu = $('#mobile-menu');
+if (mobileMenuButton && mobileMenu) {
+  mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  // cerrar al elegir link
+  $$('#mobile-menu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+}
+
+/* ========== Modal de búsqueda ========== */
+const searchModal = $('#searchModal');
+const closeSearch = $('#closeSearch');
+const searchInput = $('#searchInput');
+const searchResults = $('#searchResults');
+const openSearchBtns = $$('.open-search');
+
+function openSearch() {
+  if (!searchModal) return;
+  searchModal.classList.remove('hidden');
+  setTimeout(() => searchInput && searchInput.focus(), 50);
+}
+function hideSearch() {
+  if (!searchModal) return;
+  searchModal.classList.add('hidden');
+  if (searchInput) searchInput.value = '';
+  if (searchResults) searchResults.innerHTML = '';
+}
+
+openSearchBtns.forEach(btn => btn.addEventListener('click', openSearch));
+closeSearch && closeSearch.addEventListener('click', hideSearch);
+
+// cerrar si clickeás el overlay (el propio modal es el overlay)
+searchModal && searchModal.addEventListener('click', (e) => {
+  if (e.target === searchModal) hideSearch();
 });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideSearch(); });
 
-// Initialize carousel
-updateCarousel();
+/* ========== Indexado de productos (nuevos + favoritos) ========== */
+// Toma tarjetas del grid de “Productos” y del carrusel “Nuevos”
+function collectProducts() {
+  const list = [];
 
-// Update carousel on window resize
-window.addEventListener('resize', updateCarousel);
-
-// Mobile menu functionality
-const mobileMenuButton = document.getElementById('mobile-menu-button');
-const mobileMenu = document.getElementById('mobile-menu');
-
-mobileMenuButton.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-});
-
-// Close mobile menu when clicking a link
-document.querySelectorAll('#mobile-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-    });
-});
-
-// Search functionality
-const searchModal = document.getElementById('searchModal');
-const closeSearch = document.getElementById('closeSearch');
-const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
-
-// Get all products when page loads
-const products = Array.from(document.querySelectorAll('#productos .grid > div')).map(card => ({
-    name: card.querySelector('h4').textContent,
-    description: card.querySelector('p').textContent,
-    price: card.querySelector('span').textContent,
-    image: card.querySelector('img').src
-}));
-
-// Open search modal on search icon click
-document.querySelectorAll('.text-forest svg').forEach(icon => {
-    icon.addEventListener('click', () => {
-        searchModal.classList.remove('hidden');
-        setTimeout(() => {
-            searchInput.focus();
-        }, 300);
-    });
-});
-
-// Close search modal
-closeSearch.addEventListener('click', () => {
-    searchModal.classList.add('hidden');
-});
-
-// Close search modal on outside click
-window.addEventListener('click', (e) => {
-    if (e.target === searchModal) {
-        searchModal.classList.add('hidden');
+  // Productos (grid)
+  $$('#productos .grid > div').forEach(card => {
+    const h4 = $('h4', card);
+    const p = $('p', card);
+    const price = $('span.text-xl', card);
+    const img = $('img', card);
+    if (h4 && p && price && img) {
+      list.push({
+        name: h4.textContent.trim(),
+        description: p.textContent.trim(),
+        price: price.textContent.trim(),
+        image: img.getAttribute('src') || ''
+      });
     }
-});
+  });
 
-// Search functionality
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase();
-    searchResults.innerHTML = '';
-
-    if (query.length > 2) {
-        const filteredResults = products.filter(product => 
-            product.name.toLowerCase().includes(query) || 
-            product.description.toLowerCase().includes(query)
-        );
-
-        if (filteredResults.length === 0) {
-            searchResults.innerHTML = `
-                <p class="text-center text-moss/90 text-sm py-4">No se encontraron resultados.</p>
-            `;
-            return;
-        }
-
-        filteredResults.forEach(product => {
-            const div = document.createElement('div');
-            div.classList.add('flex', 'items-center', 'py-4', 'border-b', 'border-sage/10');
-            div.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-16 h-16 rounded-full mr-4">
-                <div class="flex-1">
-                    <p class="text-forest font-light">${product.name}</p>
-                    <p class="text-moss/90 text-sm">${product.description}</p>
-                    <p class="text-forest mt-1">${product.price}</p>
-                </div>
-                <button class="bg-sage hover:bg-moss text-cream px-4 py-2 rounded-full transition-all text-sm">
-                    Consultar
-                </button>
-            `;
-            searchResults.appendChild(div);
-        });
+  // Nuevos (carrusel)
+  $$('#nuevos .carousel-item').forEach(card => {
+    const h4 = $('h4', card);
+    const p = $('p', card);
+    const price = $('span.text-xl', card);
+    const img = $('img', card);
+    if (h4 && p && price && img) {
+      list.push({
+        name: h4.textContent.trim(),
+        description: p.textContent.trim(),
+        price: price.textContent.trim(),
+        image: img.getAttribute('src') || ''
+      });
     }
-});
+  });
+
+  return list;
+}
+let products = collectProducts();
+
+/* ========== Búsqueda local con debounce ========== */
+const renderResults = (arr) => {
+  if (!searchResults) return;
+  if (arr.length === 0) {
+    searchResults.innerHTML = `<p class="text-center text-moss/90 text-sm py-4">No se encontraron resultados.</p>`;
+    return;
+    }
+  searchResults.innerHTML = arr.map(prod => `
+    <div class="flex items-center py-4 border-b border-sage/10">
+      <img src="${prod.image}" alt="${prod.name}" class="w-16 h-16 rounded-full mr-4">
+      <div class="flex-1">
+        <p class="text-forest font-light">${prod.name}</p>
+        <p class="text-moss/90 text-sm">${prod.description}</p>
+        <p class="text-forest mt-1">${prod.price}</p>
+      </div>
+      <button class="bg-sage hover:bg-moss text-cream px-4 py-2 rounded-full transition-all text-sm">Consultar</button>
+    </div>
+  `).join('');
+};
+
+if (searchInput) {
+  const onSearch = debounce(() => {
+    const q = (searchInput.value || '').toLowerCase().trim();
+    if (q.length <= 2) { searchResults.innerHTML = ''; return; }
+    const filtered = products.filter(p =>
+      p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
+    );
+    renderResults(filtered);
+  }, 180);
+  searchInput.addEventListener('input', onSearch);
+}
+
+/* ========== Recolectar de nuevo al redimensionar (por si cambia el DOM) ========== */
+window.addEventListener('resize', () => { products = collectProducts(); });
